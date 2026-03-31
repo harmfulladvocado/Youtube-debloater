@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>YouTube Focus Mode</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <h1>YouTube Focus Mode</h1>
+        <button id="refreshPageButton" type="button">Refresh Tab</button>
+      </div>
+
+      <label class="field search-field">
+        <span>Find a setting</span>
+        <input id="optionSearch" type="text" placeholder="Search options" />
+      </label>
+
+      <section class="group" id="group-redirect">
+        <label class="row parent">
+          <input type="checkbox" id="redirectEnabled" />
+          <span>Redirect YouTube Home Automatically</span>
+        </label>
+        <label class="field">
+          <span>Target path when opening Home</span>
+          <input id="redirectPath" type="text" placeholder="/feed/subscriptions" />
+        </label>
+      </section>
+
+      <section class="group" id="group-topbar" data-parent="topBarParent">
+        <label class="row parent">
+          <input type="checkbox" id="topBarParent" />
+          <span>Top Bar Cleanup</span>
+        </label>
+        <div class="children">
+          <label class="row child"><input type="checkbox" id="topBarChild_searchBox" /><span>Hide search field</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_searchButton" /><span>Hide search submit button</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_voiceButton" /><span>Hide voice search button</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_guideButton" /><span>Hide guide/sidebar toggle button</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_notificationsButton" /><span>Hide notifications button</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_homeLogo" /><span>Hide YouTube logo (home link)</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_profileButton" /><span>Hide account/profile button</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_createButton" /><span>Hide create button</span></label>
+          <label class="row child"><input type="checkbox" id="topBarChild_appsButton" /><span>Hide Google apps button</span></label>
+        </div>
+      </section>
+
+      <section class="group" id="group-rail" data-parent="leftRailParent">
+        <label class="row parent">
+          <input type="checkbox" id="leftRailParent" />
+          <span>Left Navigation Cleanup</span>
+        </label>
+        <div class="children">
+          <label class="row child"><input type="checkbox" id="leftRailChild_home" /><span>Hide Home item</span></label>
+          <label class="row child"><input type="checkbox" id="leftRailChild_you" /><span>Hide You item</span></label>
+          <label class="row child"><input type="checkbox" id="leftRailChild_subscriptions" /><span>Hide Subscriptions item</span></label>
+          <label class="row child"><input type="checkbox" id="leftRailChild_explore" /><span>Hide Explore item</span></label>
+          <label class="row child"><input type="checkbox" id="leftRailChild_history" /><span>Hide History item</span></label>
+        </div>
+      </section>
+
+      <section class="group" id="group-shorts" data-parent="shortsParent">
+        <label class="row parent">
+          <input type="checkbox" id="shortsParent" />
+          <span>Shorts Cleanup</span>
+        </label>
+        <div class="children">
+          <label class="row child"><input type="checkbox" id="shortsChild_links" /><span>Hide Shorts links</span></label>
+          <label class="row child"><input type="checkbox" id="shortsChild_richShelf" /><span>Hide Shorts shelves</span></label>
+          <label class="row child"><input type="checkbox" id="shortsChild_reelShelf" /><span>Hide Reel shelves</span></label>
+          <label class="row child"><input type="checkbox" id="shortsChild_gridCards" /><span>Hide Shorts cards in feeds</span></label>
+        </div>
+      </section>
+
+      <section class="group" id="group-home" data-parent="homeParent">
+        <label class="row parent">
+          <input type="checkbox" id="homeParent" />
+          <span>Home Page Cleanup</span>
+        </label>
+        <div class="children">
+          <label class="row child"><input type="checkbox" id="homeChild_feed" /><span>Hide Home feed</span></label>
+        </div>
+      </section>
+
+      <section class="group" id="group-watch" data-parent="watchParent">
+        <label class="row parent">
+          <input type="checkbox" id="watchParent" />
+          <span>Watch Page Cleanup</span>
+        </label>
+        <div class="children">
+          <label class="row child"><input type="checkbox" id="watchChild_title" /><span>Hide video title</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_channelName" /><span>Hide channel name</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_channelAvatar" /><span>Hide channel avatar</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_subscribe" /><span>Hide subscribe button</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_subCount" /><span>Hide subscriber count</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_likeDislike" /><span>Hide like &amp; dislike buttons</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_share" /><span>Hide share button</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_clip" /><span>Hide clip button</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_save" /><span>Hide save button</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_download" /><span>Hide download button</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_thanks" /><span>Hide thanks button</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_moreOptions" /><span>Hide more options button (...)</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_metaLine" /><span>Hide views/date line</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_description" /><span>Hide description</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_related" /><span>Hide related videos column</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_endscreen" /><span>Hide endscreen overlays</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_autoplay" /><span>Hide autoplay module</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_liveChat" /><span>Hide live chat panel</span></label>
+          <label class="row child"><input type="checkbox" id="watchChild_merch" /><span>Hide merch shelf</span></label>
+          <label class="row child child-parent"><input type="checkbox" id="watchChild_comments" /><span>Hide comments section</span></label>
+          <div class="grandchildren">
+            <label class="row grandchild"><input type="checkbox" id="watchGrandchild_reply" /><span>Hide comment reply buttons</span></label>
+            <label class="row grandchild"><input type="checkbox" id="watchGrandchild_reactions" /><span>Hide comment like/dislike buttons</span></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="group" id="group-channel" data-parent="channelParent">
+        <label class="row parent">
+          <input type="checkbox" id="channelParent" />
+          <span>Channel Page Cleanup</span>
+        </label>
+        <div class="children">
+          <label class="row child"><input type="checkbox" id="channelChild_banner" /><span>Hide channel banner</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_avatar" /><span>Hide channel avatar</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_meta" /><span>Hide channel stats/info</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_aboutText" /><span>Hide channel description text</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_socials" /><span>Hide social links</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_tabHome" /><span>Hide Home tab</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_tabVideos" /><span>Hide Videos tab</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_tabShorts" /><span>Hide Shorts tab</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_tabLive" /><span>Hide Live tab</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_tabPlaylists" /><span>Hide Playlists tab</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_tabPosts" /><span>Hide Posts tab</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_join" /><span>Hide Join button</span></label>
+          <label class="row child"><input type="checkbox" id="channelChild_subscribe" /><span>Hide Subscribe button</span></label>
+        </div>
+      </section>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
