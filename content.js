@@ -111,7 +111,7 @@
     topBarChild_homeLogo: "ytd-topbar-logo-renderer, ytd-masthead yt-icon#logo-icon, ytd-masthead a[href='/'] { display: none !important; }",
     topBarChild_countryCode: "",
     topBarChild_profileButton: "#avatar-btn, ytd-topbar-menu-button-renderer #avatar-btn { display: none !important; }",
-    topBarChild_createButton: "",
+    topBarChild_createButton: "ytd-button-renderer.style-scope.ytd-masthead[button-renderer][button-next], ytd-masthead #buttons ytd-button-renderer[button-renderer][button-next], ytd-masthead #end ytd-button-renderer[button-renderer][button-next], ytd-masthead ytd-button-renderer[button-next], ytd-masthead ytd-button-renderer:has(> yt-button-shape > button[aria-label*='Create' i]), ytd-masthead yt-button-shape:has(> button[aria-label*='Create' i]) { display: none !important; }",
     topBarChild_appsButton: "ytd-topbar-menu-button-renderer:has(button[aria-label*='Google apps' i]), button[aria-label*='Google apps' i] { display: none !important; }",
 
     leftRailChild_home: "ytd-guide-entry-renderer:has(a[title='Home' i]), ytd-mini-guide-entry-renderer:has(a[title='Home' i]), ytd-guide-entry-renderer:has(a[href='/']), ytd-mini-guide-entry-renderer:has(a[href='/']) { display: none !important; }",
@@ -256,12 +256,18 @@
 
   const DYNAMIC_TOGGLE_MAPPING = {
     topBarChild_createButton: [
-      "#buttons.style-scope.ytd-masthead",
+      "ytd-button-renderer.style-scope.ytd-masthead[button-renderer][button-next]",
+      "#end.style-scope.ytd-masthead ytd-button-renderer[button-next]",
+      "#end.style-scope.ytd-masthead ytd-button-renderer[button-renderer][button-next]",
+      "#buttons.style-scope.ytd-masthead ytd-button-renderer[button-renderer][button-next]",
+      "#end.style-scope.ytd-masthead ytd-button-renderer:has(> yt-button-shape > button[aria-label*='Create' i])",
       "#end.style-scope.ytd-masthead ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i])",
       "#end.style-scope.ytd-masthead yt-button-view-model:has(button[aria-label*='Create' i])",
       "#end.style-scope.ytd-masthead yt-button-shape:has(button[aria-label*='Create' i])",
       "#end.style-scope.ytd-masthead button[aria-label*='Create' i]",
-      "ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i])"
+      "ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i])",
+      "ytd-button-renderer[button-renderer][button-next]",
+      "ytd-button-renderer[button-next]"
     ],
     topBarChild_countryCode: [
       "#country-code.style-scope.ytd-topbar-logo-renderer",
