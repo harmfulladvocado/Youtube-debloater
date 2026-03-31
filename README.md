@@ -2,7 +2,7 @@
 
 A browser extension for reducing visual noise and bloat on YouTube.
 
-It lets you choose exactly which interface elements to hide, so YouTube stays functional while feeling cleaner and more focused.
+It lets you choose exactly which interface elements to hide, so YouTube stays functional while feeling less bloated and more focused on the video
 
 ## What it does
 
