@@ -1,26 +1,29 @@
 # YouTube Debloater
 
-A browser extension that debloats the YouTube webpage by removing unnecessary UI elements and improving the viewing experience.
+A browser extension for reducing visual noise and bloat on YouTube.
 
-## Features
+It lets you choose exactly which interface elements to hide, so YouTube stays functional while feeling cleaner and more focused.
 
-- Removes clutter from YouTube interface
-- Customizable toggle options for different UI elements
-- Real-time webpage modification
-- Persistent settings across sessions
+## What it does
 
-## Installation
+- Hides selected UI elements across top bar, watch pages, channels, shorts, home, and navigation
+- Applies changes live when settings are toggled
+- Saves your preferences with Chrome sync storage
 
-1. Clone or download this repository
-2. Open your browser's extension management page:
-   - **Chrome/Brave**: `chrome://extensions/`
-   - **Edge**: `edge://extensions/`
-3. Enable "Developer mode" (top-right)
-4. Click "Load unpacked" and select this folder
+## Installation (Chrome, Brave, Edge)
 
-## How It Works
+1. run `git clone https://github.com/harmfulladvocado/Youtube-debloater` or download this repo as a zip
+2. Open your extensions page:
+   - Chrome: `chrome://extensions/`
+   - Brave: `brave://extensions/`
+   - Edge: `edge://extensions/`
+3. Enable **Developer mode**
+4. Click **Load unpacked**
+5. Select the project folder
+6. Enjoy!
 
-- **content.js**: Modifies YouTube's DOM to hide unwanted elements
-- **popup.js/popup.html**: Provides the extension settings UI
-- **background.js**: Handles extension logic and storage
-- **manifest.json**: Extension configuration
+## Usage
+
+1. Open YouTube.com
+2. Click the extension icon
+3. Then toggle the options you want!

@@ -10,6 +10,7 @@
     topBarChild_guideButton: false,
     topBarChild_notificationsButton: false,
     topBarChild_homeLogo: false,
+    topBarChild_countryCode: false,
     topBarChild_profileButton: false,
     topBarChild_createButton: false,
     topBarChild_appsButton: false,
@@ -42,6 +43,7 @@
     watchChild_save: false,
     watchChild_download: false,
     watchChild_thanks: false,
+    watchChild_join: false,
     watchChild_moreOptions: false,
     watchChild_metaLine: false,
     watchChild_description: false,
@@ -107,8 +109,9 @@
     topBarChild_guideButton: "#guide-button.ytd-masthead, yt-icon-button#guide-button { display: none !important; }",
     topBarChild_notificationsButton: "ytd-notification-topbar-button-renderer, button[aria-label*='Notification' i] { display: none !important; }",
     topBarChild_homeLogo: "ytd-topbar-logo-renderer, ytd-masthead yt-icon#logo-icon, ytd-masthead a[href='/'] { display: none !important; }",
+    topBarChild_countryCode: "",
     topBarChild_profileButton: "#avatar-btn, ytd-topbar-menu-button-renderer #avatar-btn { display: none !important; }",
-    topBarChild_createButton: "ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i]) { display: none !important; }",
+    topBarChild_createButton: "",
     topBarChild_appsButton: "ytd-topbar-menu-button-renderer:has(button[aria-label*='Google apps' i]), button[aria-label*='Google apps' i] { display: none !important; }",
 
     leftRailChild_home: "ytd-guide-entry-renderer:has(a[title='Home' i]), ytd-mini-guide-entry-renderer:has(a[title='Home' i]), ytd-guide-entry-renderer:has(a[href='/']), ytd-mini-guide-entry-renderer:has(a[href='/']) { display: none !important; }",
@@ -130,13 +133,13 @@
     watchChild_subscribe: "ytd-watch-metadata #subscribe-button, ytd-watch-metadata ytd-subscribe-button-renderer { display: none !important; }",
     watchChild_subCount: "ytd-video-owner-renderer #owner-sub-count, #owner-sub-count { display: none !important; }",
 
-    // FIXED WATCH ACTION BUTTONS
     watchChild_likeDislike: "segmented-like-dislike-button-view-model, yt-segmented-like-dislike-button-view-model, .ytSegmentedLikeDislikeButtonViewModelHost { display: none !important; }",
     watchChild_share: "ytd-menu-renderer yt-button-view-model:has(button[aria-label*='Share' i]), ytd-menu-renderer button-view-model:has(button[aria-label*='Share' i]) { display: none !important; }",
     watchChild_clip: "ytd-menu-renderer yt-button-view-model:has(button[aria-label*='Clip' i]), ytd-menu-renderer button-view-model:has(button[aria-label*='Clip' i]) { display: none !important; }",
     watchChild_save: "ytd-menu-renderer yt-button-view-model:has(button[aria-label*='Save' i]), ytd-menu-renderer yt-button-view-model:has(button[aria-label*='Save to playlist' i]), ytd-menu-renderer button-view-model:has(button[aria-label*='Save' i]) { display: none !important; }",
     watchChild_download: "ytd-download-button-renderer, ytd-menu-renderer yt-button-view-model:has(button[aria-label*='Download' i]), ytd-menu-renderer button-view-model:has(button[aria-label*='Download' i]) { display: none !important; }",
     watchChild_thanks: "ytd-menu-renderer ytd-button-renderer:has(button[aria-label*='Thanks' i]), ytd-menu-renderer yt-button-view-model:has(button[aria-label*='Thanks' i]), ytd-menu-renderer button-view-model:has(button[aria-label*='Thanks' i]) { display: none !important; }",
+    watchChild_join: "",
     watchChild_moreOptions: "ytd-menu-renderer yt-icon-button.dropdown-trigger, ytd-menu-renderer yt-button-shape:has(button[aria-label*='More actions' i]), ytd-menu-renderer yt-button-view-model:has(button[aria-label*='More actions' i]), ytd-menu-renderer button-view-model:has(button[aria-label*='More actions' i]) { display: none !important; }",
 
     watchChild_metaLine: "ytd-watch-info-text #info, ytd-watch-info-text #date-text, #info-container #info { display: none !important; }",
@@ -241,7 +244,7 @@
     
     let cssText = "";
     for (const [key, css] of Object.entries(CSS_MAPPING)) {
-      if (isFeatureEnabled(key)) {
+      if (css && isFeatureEnabled(key)) {
         cssText += css + "\n";
       }
     }
@@ -251,10 +254,64 @@
     }
   }
 
+  const DYNAMIC_TOGGLE_MAPPING = {
+    topBarChild_createButton: [
+      "#buttons.style-scope.ytd-masthead",
+      "#end.style-scope.ytd-masthead ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i])",
+      "#end.style-scope.ytd-masthead yt-button-view-model:has(button[aria-label*='Create' i])",
+      "#end.style-scope.ytd-masthead yt-button-shape:has(button[aria-label*='Create' i])",
+      "#end.style-scope.ytd-masthead button[aria-label*='Create' i]",
+      "ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i])"
+    ],
+    topBarChild_countryCode: [
+      "#country-code.style-scope.ytd-topbar-logo-renderer",
+      "ytd-topbar-logo-renderer #country-code"
+    ],
+    watchChild_join: [
+      "div#sponsor-button.style-scope.ytd-video-owner-renderer"
+    ]
+  };
+
+  function setDynamicToggleState(settingKey, enabled) {
+    const tagAttr = `data-yt-bloat-toggle-${settingKey}`;
+    const restoreAttr = `data-yt-bloat-restore-display-${settingKey}`;
+    const selectors = DYNAMIC_TOGGLE_MAPPING[settingKey] || [];
+
+    if (!enabled) {
+      document.querySelectorAll(`[${tagAttr}]`).forEach((el) => {
+        const restoreDisplay = el.getAttribute(restoreAttr);
+        if (restoreDisplay) {
+          el.style.setProperty("display", restoreDisplay);
+        } else {
+          el.style.removeProperty("display");
+        }
+        el.removeAttribute(restoreAttr);
+        el.removeAttribute(tagAttr);
+      });
+      return;
+    }
+
+    selectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((el) => {
+        if (!el.hasAttribute(tagAttr)) {
+          const existing = el.style.getPropertyValue("display");
+          if (existing) el.setAttribute(restoreAttr, existing);
+        }
+        el.style.setProperty("display", "none", "important");
+        el.setAttribute(tagAttr, "1");
+      });
+    });
+  }
+
+  function applyDynamicToggles() {
+    for (const key of Object.keys(DYNAMIC_TOGGLE_MAPPING)) {
+      setDynamicToggleState(key, isFeatureEnabled(key));
+    }
+  }
+
   function applyJsRules() {
-    // We only use JS for items that require matching complex text labels
-    // that pure CSS can't target efficiently (e.g. channel tabs and vague shorts grid cards fallback)
-    
+    applyDynamicToggles();
+
     if (settings.channelParent && isChannelPage()) {
       if (settings.channelChild_tabHome) hideChannelTabsByPathOrLabel(["/featured"], ["home"]);
       if (settings.channelChild_tabVideos) hideChannelTabsByPathOrLabel(["/videos"], ["videos"]);
