@@ -144,7 +144,7 @@
 
     watchChild_metaLine: "ytd-watch-info-text #info, ytd-watch-info-text #date-text, #info-container #info { display: none !important; }",
     watchChild_description: "ytd-watch-metadata #description, #description-inline-expander { display: none !important; }",
-    watchChild_related: "#related.ytd-watch-flexy, ytd-watch-next-secondary-results-renderer { display: none !important; }",
+    watchChild_related: "",
     watchChild_endscreen: ".ytp-ce-element, .ytp-endscreen-content { display: none !important; }",
     watchChild_autoplay: "ytd-compact-autoplay-renderer { display: none !important; }",
     watchChild_liveChat: "#chat, ytd-live-chat-frame, ytd-watch-flexy #chat-container { display: none !important; }",
@@ -269,6 +269,10 @@
     ],
     watchChild_join: [
       "div#sponsor-button.style-scope.ytd-video-owner-renderer"
+    ],
+    watchChild_related: [
+      "#secondary-inner",
+      "#related.ytd-watch-flexy"
     ]
   };
 
@@ -280,10 +284,9 @@
     if (!enabled) {
       document.querySelectorAll(`[${tagAttr}]`).forEach((el) => {
         const restoreDisplay = el.getAttribute(restoreAttr);
+        el.style.removeProperty("display");
         if (restoreDisplay) {
           el.style.setProperty("display", restoreDisplay);
-        } else {
-          el.style.removeProperty("display");
         }
         el.removeAttribute(restoreAttr);
         el.removeAttribute(tagAttr);
