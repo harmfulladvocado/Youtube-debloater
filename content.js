@@ -89,7 +89,7 @@
     if (!settings[key]) return false;
 
     // Map grandchildren/children to their specific parent dependencies
-    if (key.startsWith("watchGrandchild_")) return !!(settings.watchParent && settings.watchChild_comments);
+    if (key.startsWith("watchGrandchild_")) return !!settings.watchParent;
     if (key.startsWith("watchChild_")) return !!settings.watchParent;
     if (key.startsWith("topBarChild_")) return !!settings.topBarParent;
     if (key.startsWith("leftRailChild_")) return !!settings.leftRailParent;
@@ -150,8 +150,8 @@
     watchChild_liveChat: "#chat, ytd-live-chat-frame, ytd-watch-flexy #chat-container { display: none !important; }",
     watchChild_merch: "ytd-merch-shelf-renderer, .ytd-merch-shelf-renderer, #merch-shelf { display: none !important; }",
     watchChild_comments: "ytd-comments, #comments { display: none !important; }",
-    watchGrandchild_reply: "#reply-button-end, button[aria-label*='Reply' i] { display: none !important; }",
-    watchGrandchild_reactions: "ytd-comment-action-buttons-renderer #vote-button-middle, ytd-comment-action-buttons-renderer #vote-button-down, ytd-comment-action-buttons-renderer button[aria-label*='Like' i], ytd-comment-action-buttons-renderer button[aria-label*='Dislike' i] { display: none !important; }",
+    watchGrandchild_reply: "ytd-comment-engagement-bar#action-buttons #reply-button-end, ytd-comment-engagement-bar#action-buttons ytd-button-renderer#reply-button-end, ytd-comment-engagement-bar#action-buttons button[aria-label*='Reply' i], ytd-comment-action-buttons-renderer #reply-button-end { display: none !important; }",
+    watchGrandchild_reactions: "ytd-comment-engagement-bar#action-buttons #like-button, ytd-comment-engagement-bar#action-buttons #dislike-button, ytd-comment-engagement-bar#action-buttons #vote-count-middle, ytd-comment-engagement-bar#action-buttons button[aria-label*='Like this comment' i], ytd-comment-engagement-bar#action-buttons button[aria-label*='Dislike this comment' i], ytd-comment-action-buttons-renderer #vote-button-middle, ytd-comment-action-buttons-renderer #vote-button-down, ytd-comment-action-buttons-renderer button[aria-label*='Like' i], ytd-comment-action-buttons-renderer button[aria-label*='Dislike' i] { display: none !important; }",
 
     channelChild_banner: "ytd-page-header-banner-renderer, yt-image-banner-view-model, #page-header-banner { display: none !important; }",
     channelChild_avatar: "ytd-page-header-view-model yt-decorated-avatar-view-model, ytd-page-header-view-model yt-avatar-shape, ytd-page-header-view-model #avatar { display: none !important; }",
@@ -265,9 +265,9 @@
       "#end.style-scope.ytd-masthead yt-button-view-model:has(button[aria-label*='Create' i])",
       "#end.style-scope.ytd-masthead yt-button-shape:has(button[aria-label*='Create' i])",
       "#end.style-scope.ytd-masthead button[aria-label*='Create' i]",
-      "ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i])",
-      "ytd-button-renderer[button-renderer][button-next]",
-      "ytd-button-renderer[button-next]"
+      "ytd-masthead ytd-topbar-menu-button-renderer:has(button[aria-label*='Create' i])",
+      "ytd-masthead ytd-button-renderer[button-renderer][button-next]",
+      "ytd-masthead ytd-button-renderer[button-next]"
     ],
     topBarChild_countryCode: [
       "#country-code.style-scope.ytd-topbar-logo-renderer",
@@ -279,6 +279,17 @@
     watchChild_related: [
       "#secondary-inner",
       "#related.ytd-watch-flexy"
+    ],
+    watchGrandchild_reply: [
+      "ytd-comment-engagement-bar#action-buttons #reply-button-end",
+      "ytd-comment-action-buttons-renderer #reply-button-end"
+    ],
+    watchGrandchild_reactions: [
+      "ytd-comment-engagement-bar#action-buttons #like-button",
+      "ytd-comment-engagement-bar#action-buttons #dislike-button",
+      "ytd-comment-engagement-bar#action-buttons #vote-count-middle",
+      "ytd-comment-action-buttons-renderer #vote-button-middle",
+      "ytd-comment-action-buttons-renderer #vote-button-down"
     ]
   };
 
@@ -286,6 +297,11 @@
     const tagAttr = `data-yt-bloat-toggle-${settingKey}`;
     const restoreAttr = `data-yt-bloat-restore-display-${settingKey}`;
     const selectors = DYNAMIC_TOGGLE_MAPPING[settingKey] || [];
+
+    const matched = new Set();
+    selectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((el) => matched.add(el));
+    });
 
     if (!enabled) {
       document.querySelectorAll(`[${tagAttr}]`).forEach((el) => {
@@ -300,16 +316,38 @@
       return;
     }
 
-    selectors.forEach((selector) => {
-      document.querySelectorAll(selector).forEach((el) => {
-        if (!el.hasAttribute(tagAttr)) {
-          const existing = el.style.getPropertyValue("display");
-          if (existing) el.setAttribute(restoreAttr, existing);
-        }
-        el.style.setProperty("display", "none", "important");
-        el.setAttribute(tagAttr, "1");
-      });
+    document.querySelectorAll(`[${tagAttr}]`).forEach((el) => {
+      if (matched.has(el)) return;
+      const restoreDisplay = el.getAttribute(restoreAttr);
+      el.style.removeProperty("display");
+      if (restoreDisplay) {
+        el.style.setProperty("display", restoreDisplay);
+      }
+      el.removeAttribute(restoreAttr);
+      el.removeAttribute(tagAttr);
     });
+
+    matched.forEach((el) => {
+      if (!el.hasAttribute(tagAttr)) {
+        const existing = el.style.getPropertyValue("display");
+        if (existing) el.setAttribute(restoreAttr, existing);
+      }
+      el.style.setProperty("display", "none", "important");
+      el.setAttribute(tagAttr, "1");
+    });
+
+    if (settingKey === "topBarChild_createButton") {
+      document.querySelectorAll(`[${tagAttr}]`).forEach((el) => {
+        if (el.closest("ytd-masthead")) return;
+        const restoreDisplay = el.getAttribute(restoreAttr);
+        el.style.removeProperty("display");
+        if (restoreDisplay) {
+          el.style.setProperty("display", restoreDisplay);
+        }
+        el.removeAttribute(restoreAttr);
+        el.removeAttribute(tagAttr);
+      });
+    }
   }
 
   function applyDynamicToggles() {

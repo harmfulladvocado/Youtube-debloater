@@ -119,7 +119,9 @@ const CHILDREN_BY_PARENT = {
     "watchChild_autoplay",
     "watchChild_liveChat",
     "watchChild_merch",
-    "watchChild_comments"
+    "watchChild_comments",
+    "watchGrandchild_reply",
+    "watchGrandchild_reactions"
   ],
   channelParent: [
     "channelChild_banner",
@@ -135,14 +137,10 @@ const CHILDREN_BY_PARENT = {
     "channelChild_tabPosts",
     "channelChild_join",
     "channelChild_subscribe"
-  ],
-  watchChild_comments: ["watchGrandchild_reply", "watchGrandchild_reactions"]
+  ]
 };
 
-const DEPENDENCY_PARENT_BY_CHILD = {
-  watchGrandchild_reply: "watchChild_comments",
-  watchGrandchild_reactions: "watchChild_comments"
-};
+const DEPENDENCY_PARENT_BY_CHILD = {};
 
 const COLLAPSED_GROUPS_KEY = "popupCollapsedGroups";
 
