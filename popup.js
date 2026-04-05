@@ -52,6 +52,7 @@ const DEFAULT_SETTINGS = {
   watchChild_liveChat: false,
   watchChild_merch: false,
   watchChild_comments: false,
+  watchChild_commentComposer: false,
   watchGrandchild_reply: false,
   watchGrandchild_reactions: false,
 
@@ -120,6 +121,7 @@ const CHILDREN_BY_PARENT = {
     "watchChild_liveChat",
     "watchChild_merch",
     "watchChild_comments",
+    "watchChild_commentComposer",
     "watchGrandchild_reply",
     "watchGrandchild_reactions"
   ],

@@ -53,6 +53,7 @@
     watchChild_liveChat: false,
     watchChild_merch: false,
     watchChild_comments: false,
+    watchChild_commentComposer: false,
     watchGrandchild_reply: false,
     watchGrandchild_reactions: false,
 
@@ -150,6 +151,7 @@
     watchChild_liveChat: "#chat, ytd-live-chat-frame, ytd-watch-flexy #chat-container { display: none !important; }",
     watchChild_merch: "ytd-merch-shelf-renderer, .ytd-merch-shelf-renderer, #merch-shelf { display: none !important; }",
     watchChild_comments: "ytd-comments, #comments { display: none !important; }",
+    watchChild_commentComposer: "ytd-comments-header-renderer, ytd-comments-header-renderer #simple-box, #simple-box, ytd-comment-simplebox-renderer { display: none !important; }",
     watchGrandchild_reply: "ytd-comment-engagement-bar#action-buttons #reply-button-end, ytd-comment-engagement-bar#action-buttons ytd-button-renderer#reply-button-end, ytd-comment-engagement-bar#action-buttons button[aria-label*='Reply' i], ytd-comment-action-buttons-renderer #reply-button-end { display: none !important; }",
     watchGrandchild_reactions: "ytd-comment-engagement-bar#action-buttons #like-button, ytd-comment-engagement-bar#action-buttons #dislike-button, ytd-comment-engagement-bar#action-buttons #vote-count-middle, ytd-comment-engagement-bar#action-buttons button[aria-label*='Like this comment' i], ytd-comment-engagement-bar#action-buttons button[aria-label*='Dislike this comment' i], ytd-comment-action-buttons-renderer #vote-button-middle, ytd-comment-action-buttons-renderer #vote-button-down, ytd-comment-action-buttons-renderer button[aria-label*='Like' i], ytd-comment-action-buttons-renderer button[aria-label*='Dislike' i] { display: none !important; }",
 
@@ -279,6 +281,13 @@
     watchChild_related: [
       "#secondary-inner",
       "#related.ytd-watch-flexy"
+    ],
+    watchChild_commentComposer: [
+      "ytd-comments-header-renderer",
+      "#simple-box",
+      "ytd-comments-header-renderer #simple-box",
+      "ytd-comments-header-renderer ytd-comment-simplebox-renderer",
+      "ytd-comment-simplebox-renderer"
     ],
     watchGrandchild_reply: [
       "ytd-comment-engagement-bar#action-buttons #reply-button-end",
