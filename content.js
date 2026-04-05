@@ -1,6 +1,6 @@
 (() => {
   const DEFAULT_SETTINGS = {
-    redirectEnabled: true,
+    redirectEnabled: false,
     redirectPath: "/feed/subscriptions",
 
     topBarParent: true,

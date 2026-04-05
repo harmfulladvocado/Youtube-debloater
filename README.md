@@ -10,9 +10,12 @@ It lets you choose exactly which interface elements to hide, so YouTube stays fu
 - Applies changes live when settings are toggled
 - Saves your preferences with Chrome sync storage
 
-## Installation (Chrome, Brave, Edge) future support for firefox will be included in the future*
+## Installation
 
-1. run `git clone https://github.com/harmfulladvocado/Youtube-debloater` or download this repo as a zip
+**Firefox:** Install directly from the [Firefox Add-ons Store](https://addons.mozilla.org/en-US/firefox/addon/youtube-bloat-remover-toggle/)
+
+**Chromium-based browsers (Chrome, Brave, Edge):**
+1. Run `git clone https://github.com/harmfulladvocado/Youtube-debloater` or download this repo as a zip
 2. Open your extensions page:
    - Chrome: `chrome://extensions/`
    - Brave: `brave://extensions/`
