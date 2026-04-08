@@ -145,7 +145,7 @@
 
     watchChild_metaLine: "ytd-watch-info-text #info, ytd-watch-info-text #date-text, #info-container #info { display: none !important; }",
     watchChild_description: "ytd-watch-metadata #description, #description-inline-expander { display: none !important; }",
-    watchChild_related: "",
+    watchChild_related: ".ytd-watch-next-secondary-results-renderer.style-scope > .ytd-item-section-renderer.style-scope { display: none !important; }",
     watchChild_endscreen: ".ytp-ce-element, .ytp-endscreen-content { display: none !important; }",
     watchChild_autoplay: "ytd-compact-autoplay-renderer { display: none !important; }",
     watchChild_liveChat: "#chat, ytd-live-chat-frame, ytd-watch-flexy #chat-container { display: none !important; }",
@@ -153,7 +153,7 @@
     watchChild_comments: "ytd-comments, #comments { display: none !important; }",
     watchChild_commentComposer: "ytd-comments-header-renderer, ytd-comments-header-renderer #simple-box, #simple-box, ytd-comment-simplebox-renderer { display: none !important; }",
     watchGrandchild_reply: "ytd-comment-engagement-bar#action-buttons #reply-button-end, ytd-comment-engagement-bar#action-buttons ytd-button-renderer#reply-button-end, ytd-comment-engagement-bar#action-buttons button[aria-label*='Reply' i], ytd-comment-action-buttons-renderer #reply-button-end { display: none !important; }",
-    watchGrandchild_reactions: "ytd-comment-engagement-bar#action-buttons #like-button, ytd-comment-engagement-bar#action-buttons #dislike-button, ytd-comment-engagement-bar#action-buttons #vote-count-middle, ytd-comment-engagement-bar#action-buttons button[aria-label*='Like this comment' i], ytd-comment-engagement-bar#action-buttons button[aria-label*='Dislike this comment' i], ytd-comment-action-buttons-renderer #vote-button-middle, ytd-comment-action-buttons-renderer #vote-button-down, ytd-comment-action-buttons-renderer button[aria-label*='Like' i], ytd-comment-action-buttons-renderer button[aria-label*='Dislike' i] { display: none !important; }",
+    watchGrandchild_reactions: "#action-buttons { display: none !important; }",
 
     channelChild_banner: "ytd-page-header-banner-renderer, yt-image-banner-view-model, #page-header-banner { display: none !important; }",
     channelChild_avatar: "ytd-page-header-view-model yt-decorated-avatar-view-model, ytd-page-header-view-model yt-avatar-shape, ytd-page-header-view-model #avatar { display: none !important; }",
@@ -279,8 +279,7 @@
       "div#sponsor-button.style-scope.ytd-video-owner-renderer"
     ],
     watchChild_related: [
-      "#secondary-inner",
-      "#related.ytd-watch-flexy"
+      ".ytd-watch-next-secondary-results-renderer.style-scope > .ytd-item-section-renderer.style-scope"
     ],
     watchChild_commentComposer: [
       "ytd-comments-header-renderer",
@@ -294,11 +293,7 @@
       "ytd-comment-action-buttons-renderer #reply-button-end"
     ],
     watchGrandchild_reactions: [
-      "ytd-comment-engagement-bar#action-buttons #like-button",
-      "ytd-comment-engagement-bar#action-buttons #dislike-button",
-      "ytd-comment-engagement-bar#action-buttons #vote-count-middle",
-      "ytd-comment-action-buttons-renderer #vote-button-middle",
-      "ytd-comment-action-buttons-renderer #vote-button-down"
+      "#action-buttons"
     ]
   };
 
